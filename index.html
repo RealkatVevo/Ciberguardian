@@ -23,7 +23,7 @@
   #amePulse{ font-size:220px; color:var(--ame-pink); margin-top:8px; transform-origin:center; animation:pulse 1s ease-in-out infinite, colorShift 2s linear infinite alternate; text-shadow:0 10px 30px rgba(255,77,109,0.18); z-index: 2; /* Asegurar que el corazón esté sobre las fotos */ }
   @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}} @keyframes colorShift{0%{color:var(--ame-pink)}50%{color:var(--ame-pink-2)}100%{color:var(--ame-pink)}}
 
-  /* --- NUEVOS ESTILOS PARA FOTOS Y MENSAJE FINAL --- */
+  /* --- ESTILOS PARA FOTOS Y MENSAJE FINAL --- */
   .photos-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
   .falling-photo { position: absolute; top: -150px; /* Empiezan fuera de la pantalla */ width: auto; height: 150px; /* Ajusta el tamaño */ border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); opacity: 0.8; animation: fall linear forwards; }
   @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } } /* Caída y rotación */
@@ -46,9 +46,15 @@
     <div class="ame-window" id="amePage1" style="display:flex;">
       <h1 id="ameTitle">Para Ame 💕</h1>
       <p id="ameIntro">
-        Holaaaa❤️❤️❤️, llevo teniendo esto mucho tiempo guardado y en parte sé que me odiarás por lo que estoy por hacer jsjajsj. Desde que comenzamos a "andar", el tiempo pasaba y cada vez me parecías más interesante y más atractiva, y me iba dando cuenta que cada vez me gustabas más, porque eras diferente, por tu forma de ser, tu manera en que te pones nerviosa, como caminas, ME ENCANTA VERTE FELIZ, me gusta tu risa, tu pelo, tu cuerpo y sobre todo TUS HERMOSOS OJOS.
+       <p id="ameIntro">
+        Holaaaa ❤️❤️❤️. Llevo un tiempo guardando esto y sé que en parte me vas a querer matar por la sorpresa jsjajsj, pero tenía que hacerlo.
         <br><br>
-        También me gustaría agradecerte por aparecer en mi vida. Desde que estás a mi lado, siento que soy la persona más feliz del mundo, me ayudaste a volver a valorar, a buscar mi mejor versión y volver a sentir lo que es estar enamorado. Puede que hasta este punto ya sepas a lo que voy y que ambos estemos muy nerviosos, pero te lo quiero preguntar porque ya no aguanto más...
+        Desde que empezamos a andar, el tiempo voló y cada día te veía más interesante, más atractiva. Me fui dando cuenta de que me gustabas de verdad porque eres diferente. Me encanta tu forma de ser, la manera en que te pones nerviosa, tu forma de caminar... Amo tu risa, tu pelo, tu cuerpo y, sobre todo, <b>TUS HERMOSOS OJOS</b>. Pero por encima de todo: <b>ME ENCANTA VERTE FELIZ</b>.
+        <br><br>
+        Gracias por aparecer en mi vida. A tu lado siento que soy la persona más afortunada del mundo. Me ayudaste a reencontrarme, a buscar mi mejor versión y a sentir de nuevo lo que es estar enamorado.
+        <br><br>
+        Quizás ya sabes a lo que voy y seguro estamos los dos súper nerviosos, pero te lo quiero preguntar porque ya no aguanto más...
+      </p>
       </p>
       <button id="toPage2" style="margin-top:20px; padding:12px 20px; border-radius:12px; border:none; background:linear-gradient(180deg,var(--ame-pink),var(--ame-pink-2)); color:white; font-weight:700; box-shadow:0 12px 36px rgba(255,77,109,0.12);">Continuar 💌</button>
     </div>
@@ -78,13 +84,13 @@
 <script>
   const sleep = ms => new Promise(res => setTimeout(res, ms));
   const openAme = document.getElementById('openAme'); const ameOverlay = document.getElementById('ameOverlay'); const closeAme = document.getElementById('closeAme'); const page1 = document.getElementById('amePage1'); const page2 = document.getElementById('amePage2'); const page3Yes = document.getElementById('amePage3Yes'); const page3No = document.getElementById('amePage3No'); const toPage2 = document.getElementById('toPage2'); const ameYesBtn = document.getElementById('ameYesBtn'); const ameNoBtn = document.getElementById('ameNoBtn'); const amePulse = document.getElementById('amePulse');
-  const photosContainer = document.getElementById('photos-container'); // Referencia al contenedor de fotos
+  const photosContainer = document.getElementById('photos-container');
 
   openAme.addEventListener('click', () => { ameOverlay.classList.add('show'); ameOverlay.style.display = 'flex'; ameOverlay.setAttribute('aria-hidden','false'); resetAme(); showPage(1); });
   closeAme.addEventListener('click', () => { ameOverlay.classList.remove('show'); ameOverlay.style.display = 'none'; ameOverlay.setAttribute('aria-hidden','true'); resetAme(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeAme.click(); } }); ameOverlay.addEventListener('click', (e) => { if (e.target === ameOverlay) closeAme.click(); });
 
-  function resetAme(){ page1.style.display = 'flex'; page2.style.display = 'none'; page3Yes.style.display = 'none'; page3No.style.display = 'none'; amePulse.style.display = 'none'; photosContainer.innerHTML = ''; } // Limpiar fotos al cerrar
+  function resetAme(){ page1.style.display = 'flex'; page2.style.display = 'none'; page3Yes.style.display = 'none'; page3No.style.display = 'none'; amePulse.style.display = 'none'; photosContainer.innerHTML = ''; }
   function showPage(n){ page1.style.display = (n===1)?'flex':'none'; page2.style.display = (n===2)?'flex':'none'; page3Yes.style.display = (n===3)?'flex':'none'; page3No.style.display = (n===4)?'flex':'none'; }
   toPage2.addEventListener('click', () => { showPage(2); });
 
@@ -94,17 +100,16 @@
     amePulse.style.display = 'block';
     amePulse.animate([{transform:'scale(0.94)'},{transform:'scale(1.18)'},{transform:'scale(1)'}], {duration:620, easing:'ease-in-out'});
     
-    // Fotos a mostrar
-    const photoSources = ['image_0.png', 'image_2.png', 'image_0.png', 'image_2.png', 'image_0.png']; // Repetimos para más efecto
+    // AQUÍ SE AGREGÓ LA NUEVA IMAGEN 'image_3.png'
+    const photoSources = ['image_0.png', 'image_3.png', 'image_2.png', 'image_0.png', 'image_3.png', 'image_2.png']; 
     
     photoSources.forEach((src, index) => {
       const img = document.createElement('img');
       img.src = src;
       img.classList.add('falling-photo');
-      // Posición horizontal aleatoria y retraso de animación escalonado
       img.style.left = `${Math.random() * 80 + 10}%`; 
-      img.style.animationDuration = `${Math.random() * 3 + 4}s`; // Entre 4 y 7 segundos
-      img.style.animationDelay = `${index * 0.8}s`; // Retraso escalonado
+      img.style.animationDuration = `${Math.random() * 3 + 4}s`;
+      img.style.animationDelay = `${index * 0.8}s`;
       photosContainer.appendChild(img);
     });
   });
